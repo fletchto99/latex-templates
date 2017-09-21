@@ -14,6 +14,7 @@
 \usepackage{lastpage} % reference page numbers %
 \usepackage{color} % colors for code
 \usepackage{tikz} % for graphs
+\usepackage{soul} % for strikthroughout
 
 
 % Document details %
@@ -48,6 +49,7 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{positioning}
 \usetikzlibrary{matrix}
+\usetikzlibrary{automata}
 
 % Define ceiling and floor functions
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
@@ -83,7 +85,7 @@
   \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
   \fancyfoot[L]{\courseCode}
   \renewcommand{\headrulewidth}{0mm}
-}  
+}
 
 % Page header and footers %
 \fancyhf{}
