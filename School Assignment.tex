@@ -4,7 +4,7 @@
 \usepackage[headheight=110pt,margin=1in]{geometry} % page margins %
 \usepackage{mathtools, amssymb} % math %
 \usepackage{tabularx, multirow} % tables %
-\usepackage{listings} % code %
+\usepackage{minted} % code %
 \usepackage{graphicx} % graphics %
 \usepackage{enumerate} % lists %
 \usepackage{adjustbox} % images %
@@ -15,7 +15,6 @@
 \usepackage{color} % colors for code
 \usepackage{tikz} % for graphs
 \usepackage{soul} % for strikthroughout
-
 
 % Document details %
 \newcommand{\university}{<university>}
@@ -36,14 +35,27 @@
 \setlength{\tindent}{\parindent}
 \setlength{\parindent}{0pt}
 
-% fix padding on code indents %
-\lstset{
+\setminted{
+    fontfamily=tt,
+    gobble=0,
     frame=single,
+    funcnamehighlighting=true,
+    tabsize=4,
+    obeytabs=false,
+    mathescape=false
+    samepage=false,
+    showspaces=false,
+    showtabs =false,
+    texcl=false,
+    breaklines=true,
 }
 
 % inline code
 \definecolor{codegray}{gray}{0.9}
 \newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+
+% Code from tile
+\newcommand{\codefile}{\inputminted}
 
 % Graphing stuff
 \usetikzlibrary{arrows.meta}
@@ -71,7 +83,7 @@
     \begin{center}
         \textbf{\assignmentType \#\assignemntNumber}\\
         \name \hspace{1pt} - \studentNumber\\
-        \dueDate\\ 
+        \dueDate\\
     \end{center}
     \vspace{6pt}
     \hrule
@@ -107,9 +119,12 @@
 \section*{Question 1}
 
 \begin{enumerate}[a)]
-    \item 
+    \item
     \item
     \item
 \end{enumerate}
+
+\codefile{javascript}{sample.js}
+\code{This is an example of inline code}
 
 \end{document}
