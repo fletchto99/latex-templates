@@ -1,7 +1,7 @@
 \documentclass[fleqn, 12pt]{article}
 
 % packages %
-\usepackage[headheight=110pt,margin=1in]{geometry} % page margins %
+\usepackage[includeheadfoot,headheight=15pt,margin=0.5in,left=1in,right=1in,headsep=10pt]{geometry} % page margins %
 \usepackage{mathtools, amssymb} % math %
 \usepackage{tabularx, multirow} % tables %
 \usepackage{minted} % code %
@@ -12,9 +12,10 @@
 \usepackage[protrusion=true,expansion=true]{microtype} % font clarity %
 \usepackage{fancyhdr} % headers and footers %
 \usepackage{lastpage} % reference page numbers %
-\usepackage{color} % colors for code
-\usepackage{tikz} % for graphs
-\usepackage{soul} % for strikthroughout
+\usepackage{color} % colors for code %
+\usepackage{tikz} % for graphs %
+\usepackage{soul} % for strikethroughout %
+\usepackage{upquote} % Fix single quotes %
 
 % Document details %
 \newcommand{\university}{<university>}
@@ -26,15 +27,13 @@
 \newcommand{\dueDate}{<due date>}
 \newcommand{\courseCode}{<course code>}
 \newcommand{\courseTitle}{<course title>}
+\newcommand{\essaytitle}{<title>} % only for essays %
+\newcommand{\essaysubtitle}{<sub title>} % only for essays %
 
 % Center image and diagrams %
 \adjustboxset*{center}
 
-% Prevent paragraph indents, this isn't an English assignment! %
-\newlength\tindent
-\setlength{\tindent}{\parindent}
-\setlength{\parindent}{0pt}
-
+% Code settings %
 \setminted{
     fontfamily=tt,
     gobble=0,
@@ -50,20 +49,20 @@
     breaklines=true,
 }
 
-% inline code
+% inline code %
 \definecolor{codegray}{gray}{0.9}
 \newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
 
-% Code from tile
+% Code from tile %
 \newcommand{\codefile}{\inputminted}
 
-% Graphing stuff
+% Graphing stuff %
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{positioning}
 \usetikzlibrary{matrix}
 \usetikzlibrary{automata}
 
-% Define ceiling and floor functions
+% Define ceiling and floor functions %
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -75,22 +74,8 @@
 \newcommand{\nequiv}{\not\equiv}
 \newcommand{\liff}{\leftrightarrow}
 
-% Document header %
-\newcommand{\makeheader}{
-    \noindent
-    \courseTitle \hfill \university\\
-    \courseCode \hfill \semester
-    \begin{center}
-        \textbf{\assignmentType \#\assignemntNumber}\\
-        \name \hspace{1pt} - \studentNumber\\
-        \dueDate\\
-    \end{center}
-    \vspace{6pt}
-    \hrule
-}
-
 % first page header & footer %
-\fancypagestyle{firstpage}{
+\fancypagestyle{assignment}{
   \fancyhf{}
   \renewcommand{\footrulewidth}{0.1mm}
   \fancyfoot[R]{Assignment \assignemntNumber}
@@ -110,11 +95,53 @@
 
 % Apply headers & footer page style %
 \pagestyle{fancy}
+
+% Assignment first page header %
+\newcommand{\beginassignemnt}{
+    % Prevent paragraph indents, this isn't an English assignment! %
+    \newlength\tindent
+    \setlength{\tindent}{\parindent}
+    \setlength{\parindent}{0pt}
+
+    \thispagestyle{assignment}
+    \noindent
+    \courseTitle \hfill \university\\
+    \courseCode \hfill \semester
+    \begin{center}
+        \textbf{\assignmentType\text{ }\#\assignemntNumber}\\
+        \name \hspace{1pt} - \studentNumber\\
+        \dueDate\\
+    \end{center}
+    \vspace{6pt}
+    \hrule
+    \vspace{1.5\headsep}
+}
+
+% Essay titlepage stuff %
+\newcommand{\beginessay}{
+    \begin{center}
+        \normalsize
+        \textsc{\university}\\[5cm]
+        \LARGE \textbf{\MakeUppercase{\essaytitle}}\\[0.5cm]
+        \large \text{ }\essaysubtitle\text{ }\\[10cm] % blank \texts are used for empty subtitles %
+        \normalsize
+        \textsc{\name}\\
+        \textsc{\studentNumber}\\
+        \textsc{\courseCode}\\
+        \textsc{\semester}\\
+        \textsc{\dueDate}
+    \end{center}
+    \thispagestyle{empty}
+    \newpage
+}
+
+% Begin the document %
 \begin{document}
 
-% ignore fancy headers on this page and use document header %
-\thispagestyle{firstpage}
-\makeheader
+% makes the header for assignment/titlepage for essay %
+% \beginessay
+\beginassignemnt
+
 
 \section*{Assignment template}
 
@@ -125,7 +152,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % simple listings, parameter can be changed to change bullet style
 % use itemize for unordered lists
 \begin{enumerate}[a)]
-    \item item 
+    \item item
     \item item
     \item item
 \end{enumerate}
@@ -152,7 +179,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % uses tikz for graphing
 \begin{center}
     \begin{tikzpicture}
-    
+
         % defines all of the nodes within the picture
         \begin{scope}
             % node [type] number at location {contents};
@@ -162,7 +189,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
             \node[state] (4) at (9,2) {};
             \node[state] (5) at (12,0) {+};
         \end{scope}
-        
+
         % defines all of the paths within the picture
         \begin{scope}[>={Stealth[black]}, every node/.style={fill=white}]
             %path [arrow] (start node) edge node {contents} (end node);
@@ -213,16 +240,16 @@ $
     \hline
     Version 1 & Version 2\\\hline
     \begin{tikzpicture}
-        \node{S} 
+        \node{S}
             child{
-                node{S} 
-                child{ 
+                node{S}
+                child{
                     node{S}
                     child{
                         node{b}
                     }
                 }
-                child{ 
+                child{
                     node{bbb}
                 }
             }
@@ -232,10 +259,10 @@ $
     \end{tikzpicture}
     &
     \begin{tikzpicture}
-        \node{S} 
+        \node{S}
             child{
-                node{S} 
-                child{ 
+                node{S}
+                child{
                     node{S}
                     child{
                         node{S}
@@ -247,7 +274,7 @@ $
                         node{bb}
                     }
                 }
-                child{ 
+                child{
                     node{bb}
                 }
             }
