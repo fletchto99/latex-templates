@@ -1,0 +1,261 @@
+\documentclass[fleqn, 12pt]{article}
+
+% packages %
+\usepackage[headheight=110pt,margin=1in]{geometry} % page margins %
+\usepackage{mathtools, amssymb} % math %
+\usepackage{tabularx, multirow} % tables %
+\usepackage{minted} % code %
+\usepackage{graphicx} % graphics %
+\usepackage{enumerate} % lists %
+\usepackage{adjustbox} % images %
+\usepackage[T1]{fontenc} % fonts %
+\usepackage[protrusion=true,expansion=true]{microtype} % font clarity %
+\usepackage{fancyhdr} % headers and footers %
+\usepackage{lastpage} % reference page numbers %
+\usepackage{color} % colors for code
+\usepackage{tikz} % for graphs
+\usepackage{soul} % for strikthroughout
+
+% Document details %
+\newcommand{\university}{<university>}
+\newcommand{\name}{<name>}
+\newcommand{\studentNumber}{<student id>}
+\newcommand{\semester}{<semester>}
+\newcommand{\assignmentType}{<type>}
+\newcommand{\assignemntNumber}{<number>}
+\newcommand{\dueDate}{<due date>}
+\newcommand{\courseCode}{<course code>}
+\newcommand{\courseTitle}{<course title>}
+
+% Center image and diagrams %
+\adjustboxset*{center}
+
+% Prevent paragraph indents, this isn't an English assignment! %
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+
+\setminted{
+    fontfamily=tt,
+    gobble=0,
+    frame=single,
+    funcnamehighlighting=true,
+    tabsize=4,
+    obeytabs=false,
+    mathescape=false
+    samepage=false,
+    showspaces=false,
+    showtabs =false,
+    texcl=false,
+    breaklines=true,
+}
+
+% inline code
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+
+% Code from tile
+\newcommand{\codefile}{\inputminted}
+
+% Graphing stuff
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
+\usetikzlibrary{automata}
+
+% Define ceiling and floor functions
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% Create set compliment command %
+\newcommand{\setcomp}[1]{{#1}^{\mathsf{c}}}
+
+% Create logic command aliases %
+\newcommand{\limplies}{\rightarrow}
+\newcommand{\nequiv}{\not\equiv}
+\newcommand{\liff}{\leftrightarrow}
+
+% Document header %
+\newcommand{\makeheader}{
+    \noindent
+    \courseTitle \hfill \university\\
+    \courseCode \hfill \semester
+    \begin{center}
+        \textbf{\assignmentType \#\assignemntNumber}\\
+        \name \hspace{1pt} - \studentNumber\\
+        \dueDate\\
+    \end{center}
+    \vspace{6pt}
+    \hrule
+}
+
+% first page header & footer %
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+  \renewcommand{\footrulewidth}{0.1mm}
+  \fancyfoot[R]{Assignment \assignemntNumber}
+  \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+  \fancyfoot[L]{\courseCode}
+  \renewcommand{\headrulewidth}{0mm}
+}
+
+% Page header and footers %
+\fancyhf{}
+\renewcommand{\footrulewidth}{0.1mm}
+\fancyfoot[R]{Assignment \assignemntNumber}
+\fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+\fancyfoot[L]{\courseCode}
+\fancyhead[L]{\name}
+\fancyhead[R]{\studentNumber}
+
+% Apply headers & footer page style %
+\pagestyle{fancy}
+\begin{document}
+
+% ignore fancy headers on this page and use document header %
+\thispagestyle{firstpage}
+\makeheader
+
+\section*{Assignment template}
+
+Comes with variables for name and class info (lines 20-29). Auto generates page numbers, footers and headers. Supports many math and coding related packages.
+
+\section*{Enumerations}
+
+% simple listings, parameter can be changed to change bullet style
+% use itemize for unordered lists
+\begin{enumerate}[a)]
+    \item item 
+    \item item
+    \item item
+\end{enumerate}
+
+\section*{Code}
+
+%uses minted for formatting, only supports minted code
+\codefile{javascript}{sample.js}
+
+%no fancy formatting for inline code
+\code{This is an example of inline code}
+
+\section*{Graphics (png, pdf, jpg, etc...)}
+
+% include any graphic type -- can change the width. I like to base
+% it off of the text width
+\adjincludegraphics[width=0.5\textwidth]{sample.jpg}
+
+% add a page break
+\newpage
+
+\section*{Tikz graphs}
+
+% uses tikz for graphing
+\begin{center}
+    \begin{tikzpicture}
+    
+        % defines all of the nodes within the picture
+        \begin{scope}
+            % node [type] number at location {contents};
+            \node[state] (1) at (0,0) {-};
+            \node[state] (2) at (3,2) {};
+            \node[state] (3) at (6,0) {};
+            \node[state] (4) at (9,2) {};
+            \node[state] (5) at (12,0) {+};
+        \end{scope}
+        
+        % defines all of the paths within the picture
+        \begin{scope}[>={Stealth[black]}, every node/.style={fill=white}]
+            %path [arrow] (start node) edge node {contents} (end node);
+            \path [->] (1) edge[loop left] node {$a$} (1);
+            \path [->] (1) edge node {$b$} (2);
+            \path [->] (2) edge node {$a$} (3);
+            \path [->] (2) edge[loop above] node {$b$} (2);
+            \path [->] (3) edge[loop above] node {$a,b$} (3);
+            \path [->] (3) edge node {$b$} (4);
+            \path [->] (4) edge[loop above] node {$b$} (4);
+            \path [->] (4) edge node {$a$} (5);
+            \path [->] (5) edge[loop right] node {$a,b$} (5);
+        \end{scope}
+    \end{tikzpicture}
+\end{center}
+
+\section*{Math examples}
+
+% I like to do math in an aligned environment
+% To align things just do &=
+$
+    \begin{aligned}
+        SQNR &= 6.02n + 1.76\\
+        36 &= 6.02n + 1.76\\
+        36 - 1.76 &=  6.02n\\
+        34.24 &= 6.02n\\
+        \frac{34.24}{6.02} &= 5.688
+    \end{aligned}
+$
+
+\section*{Table example}
+
+% A sample table which can be used to compute checksums
+\begin{tabular}{r c c c}
+      &    & E3 & 4F\\
+      &    & 23 & 96\\
+      &    & 44 & 27\\
+    + &    & 99 & F3\\\hline
+    = & 01 & E4 & FF\\
+    + &    &    & 01\\\hline
+    = &    & E5 & 00 \\\hline
+    ' &    & 1A & FF \\
+\end{tabular}\\\\
+
+\section*{Advanced example of tabular and tikz picture to form tree}
+
+\begin{tabular}{|c|c|}
+    \hline
+    Version 1 & Version 2\\\hline
+    \begin{tikzpicture}
+        \node{S} 
+            child{
+                node{S} 
+                child{ 
+                    node{S}
+                    child{
+                        node{b}
+                    }
+                }
+                child{ 
+                    node{bbb}
+                }
+            }
+            child{
+                node{bbb}
+            };
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}
+        \node{S} 
+            child{
+                node{S} 
+                child{ 
+                    node{S}
+                    child{
+                        node{S}
+                        child{
+                            node{b}
+                        }
+                    }
+                    child{
+                        node{bb}
+                    }
+                }
+                child{ 
+                    node{bb}
+                }
+            }
+            child{
+                node{bb}
+            };
+    \end{tikzpicture}
+    \\\hline
+\end{tabular}\\\\
+
+\end{document}
