@@ -16,19 +16,27 @@
 \usepackage{tikz} % for graphs %
 \usepackage{soul} % for strikethroughout %
 \usepackage{upquote} % Fix single quotes %
+\usepackage{etoolbox} % Conditional checks %
+\usepackage{hyperref} % Hyperlinks %
+\usepackage{indentfirst} % fix indentation - only for essays %
+\usepackage[figure,table]{totalcount} % For counting tables and figures %
+\usepackage[utf8]{inputenc} % Encode as UTF-8 %
+\usepackage{biblatex} % References %
+\addbibresource{references.bib} % bib source %
 
 % Document details %
-\newcommand{\university}{<university>}
-\newcommand{\name}{<name>}
-\newcommand{\studentNumber}{<student id>}
-\newcommand{\semester}{<semester>}
-\newcommand{\assignmentType}{<type>}
-\newcommand{\assignemntNumber}{<number>}
-\newcommand{\dueDate}{<due date>}
-\newcommand{\courseCode}{<course code>}
-\newcommand{\courseTitle}{<course title>}
-\newcommand{\essaytitle}{<title>} % only for essays %
-\newcommand{\essaysubtitle}{<sub title>} % only for essays %
+\newcommand{\university}{<University>}
+\newcommand{\name}{<Full Name>}
+\newcommand{\studentNumber}{<Student Number>}
+\newcommand{\semester}{<Semester>}
+\newcommand{\assignmentType}{<Assignment Type>}
+\newcommand{\assignemntNumber}{<Assignment Number>}
+\newcommand{\dueDate}{<Due Date>}
+\newcommand{\courseCode}{<Course Code>}
+\newcommand{\courseTitle}{<Course Title>}
+\newcommand{\essayTitle}{<Title>} % only for essays %
+\newcommand{\essaySubtitle}{<subtitle>} % only for essays %
+\newcommand{\essayAbstract}{} % Only for essays -- leave empty for no abstract %
 
 % Center image and diagrams %
 \adjustboxset*{center}
@@ -76,12 +84,34 @@
 
 % first page header & footer %
 \fancypagestyle{assignment}{
-  \fancyhf{}
-  \renewcommand{\footrulewidth}{0.1mm}
-  \fancyfoot[R]{Assignment \assignemntNumber}
-  \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
-  \fancyfoot[L]{\courseCode}
-  \renewcommand{\headrulewidth}{0mm}
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+    \fancyfoot[L]{\courseCode}
+    \renewcommand{\headrulewidth}{0mm}
+}
+
+% Frontmatter for essay page numbering%
+\fancypagestyle{frontmatter}{
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{EndFrontMatter}}
+    \fancyfoot[L]{\courseCode}
+    \fancyhead[L]{\name}
+    \fancyhead[R]{\studentNumber}
+}
+
+% Essay body page numbering %
+\fancypagestyle{body}{
+    \fancyhf{}
+    \renewcommand{\footrulewidth}{0.1mm}
+    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
+    \fancyfoot[L]{\courseCode}
+    \fancyhead[L]{\name}
+    \fancyhead[R]{\studentNumber}
 }
 
 % Page header and footers %
@@ -102,7 +132,7 @@
     \newlength\tindent
     \setlength{\tindent}{\parindent}
     \setlength{\parindent}{0pt}
-
+    
     \thispagestyle{assignment}
     \noindent
     \courseTitle \hfill \university\\
@@ -119,21 +149,74 @@
 
 % Essay titlepage stuff %
 \newcommand{\beginessay}{
+    % Load all citations %
+    \nocite{*}
+    
+    % Special numbering for front matter %
+    \pagestyle{frontmatter}
+    \pagenumbering{roman}
+    
+    % Titlepage stuff %
     \begin{center}
-        \normalsize
+        \normalsize 
         \textsc{\university}\\[5cm]
-        \LARGE \textbf{\MakeUppercase{\essaytitle}}\\[0.5cm]
-        \large \text{ }\essaysubtitle\text{ }\\[10cm] % blank \texts are used for empty subtitles %
+        \LARGE \textbf{\MakeUppercase{\essayTitle}}\\[0.5cm]
+        \large \text{ }\essaySubtitle\text{ }\\[10cm] % blank \texts are used for empty subtitles %
         \normalsize
         \textsc{\name}\\
-        \textsc{\studentNumber}\\
+        \textsc{\studentNumber}\\ 
         \textsc{\courseCode}\\
         \textsc{\semester}\\
         \textsc{\dueDate}
     \end{center}
     \thispagestyle{empty}
+    % End title page stuff %
+    
+    % Table of Contents %
+    \newpage
+    \tableofcontents
+    \newpage
+    
+    % If more than 1 table/figure show appropriate lists %
+    \iftotalfigures
+        \addcontentsline{toc}{section}{\listfigurename}
+        \listoffigures
+    \fi
+    \iftotaltables
+        \addcontentsline{toc}{section}{\listtablename}
+        \listoftables
+    \fi
+    
+    % Display an abstract if the abstract isn't empty %
+    \ifdefempty{\essayAbstract}{}{
+        \newpage
+        \addcontentsline{toc}{section}{Abstract}
+        \begin{abstract}
+            \essayAbstract
+        \end{abstract}
+        
+    }
+    \label{EndFrontMatter}
+    \newpage
+    
+    % Reset page numbering %
+    \pagenumbering{arabic}
+    \pagestyle{body}
+}
+
+% Update the bibliography command to add its self to the references
+\let\oldprintbib\printbibliography
+\renewcommand{\printbibliography}{
+    \newpage
+    \oldprintbib
+    \addcontentsline{toc}{section}{References}
     \newpage
 }
+
+% Fixes a Pygments bug in ES6 -- Thanks ShareLatex! %
+\makeatletter
+\expandafter\def\csname PYGdefault@tok@err\endcsname{\def\PYGdefault@bc##1{{\strut ##1}}}
+\makeatother
 
 % Begin the document %
 \begin{document}
@@ -152,7 +235,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % simple listings, parameter can be changed to change bullet style
 % use itemize for unordered lists
 \begin{enumerate}[a)]
-    \item item
+    \item item 
     \item item
     \item item
 \end{enumerate}
@@ -160,7 +243,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 \section*{Code}
 
 %uses minted for formatting, only supports minted code
-\codefile{javascript}{sample.js}
+\codefile{javascript}{code/sample.js}
 
 %no fancy formatting for inline code
 \code{This is an example of inline code}
@@ -169,7 +252,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 
 % include any graphic type -- can change the width. I like to base
 % it off of the text width
-\adjincludegraphics[width=0.5\textwidth]{sample.jpg}
+\adjincludegraphics[width=0.5\textwidth]{images/sample.jpg}
 
 % add a page break
 \newpage
@@ -179,7 +262,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % uses tikz for graphing
 \begin{center}
     \begin{tikzpicture}
-
+    
         % defines all of the nodes within the picture
         \begin{scope}
             % node [type] number at location {contents};
@@ -189,7 +272,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
             \node[state] (4) at (9,2) {};
             \node[state] (5) at (12,0) {+};
         \end{scope}
-
+        
         % defines all of the paths within the picture
         \begin{scope}[>={Stealth[black]}, every node/.style={fill=white}]
             %path [arrow] (start node) edge node {contents} (end node);
@@ -240,16 +323,16 @@ $
     \hline
     Version 1 & Version 2\\\hline
     \begin{tikzpicture}
-        \node{S}
+        \node{S} 
             child{
-                node{S}
-                child{
+                node{S} 
+                child{ 
                     node{S}
                     child{
                         node{b}
                     }
                 }
-                child{
+                child{ 
                     node{bbb}
                 }
             }
@@ -259,10 +342,10 @@ $
     \end{tikzpicture}
     &
     \begin{tikzpicture}
-        \node{S}
+        \node{S} 
             child{
-                node{S}
-                child{
+                node{S} 
+                child{ 
                     node{S}
                     child{
                         node{S}
@@ -274,7 +357,7 @@ $
                         node{bb}
                     }
                 }
-                child{
+                child{ 
                     node{bb}
                 }
             }
