@@ -30,7 +30,7 @@
 \newcommand{\studentNumber}{<Student Number>}
 \newcommand{\semester}{<Semester>}
 \newcommand{\assignmentType}{<Assignment Type>}
-\newcommand{\assignemntNumber}{<Assignment Number>}
+\newcommand{\assignmentNumber}{<Assignment Number>}
 \newcommand{\dueDate}{<Due Date>}
 \newcommand{\courseCode}{<Course Code>}
 \newcommand{\courseTitle}{<Course Title>}
@@ -86,7 +86,7 @@
 \fancypagestyle{assignment}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[R]{\assignmentType \assignmentNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
     \fancyfoot[L]{\courseCode}
     \renewcommand{\headrulewidth}{0mm}
@@ -96,7 +96,7 @@
 \fancypagestyle{frontmatter}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[R]{\assignmentType \assignemntNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{EndFrontMatter}}
     \fancyfoot[L]{\courseCode}
     \fancyhead[L]{\name}
@@ -107,7 +107,7 @@
 \fancypagestyle{body}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{Assignment \assignemntNumber}
+    \fancyfoot[R]{\assignmentType \assignemntNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
     \fancyfoot[L]{\courseCode}
     \fancyhead[L]{\name}
@@ -117,7 +117,7 @@
 % Page header and footers %
 \fancyhf{}
 \renewcommand{\footrulewidth}{0.1mm}
-\fancyfoot[R]{Assignment \assignemntNumber}
+\fancyfoot[R]{\assignmentType \assignemntNumber}
 \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
 \fancyfoot[L]{\courseCode}
 \fancyhead[L]{\name}
@@ -132,7 +132,7 @@
     \newlength\tindent
     \setlength{\tindent}{\parindent}
     \setlength{\parindent}{0pt}
-    
+
     \thispagestyle{assignment}
     \noindent
     \courseTitle \hfill \university\\
@@ -151,32 +151,32 @@
 \newcommand{\beginessay}{
     % Load all citations %
     \nocite{*}
-    
+
     % Special numbering for front matter %
     \pagestyle{frontmatter}
     \pagenumbering{roman}
-    
+
     % Titlepage stuff %
     \begin{center}
-        \normalsize 
+        \normalsize
         \textsc{\university}\\[5cm]
         \LARGE \textbf{\MakeUppercase{\essayTitle}}\\[0.5cm]
         \large \text{ }\essaySubtitle\text{ }\\[10cm] % blank \texts are used for empty subtitles %
         \normalsize
         \textsc{\name}\\
-        \textsc{\studentNumber}\\ 
+        \textsc{\studentNumber}\\
         \textsc{\courseCode}\\
         \textsc{\semester}\\
         \textsc{\dueDate}
     \end{center}
     \thispagestyle{empty}
     % End title page stuff %
-    
+
     % Table of Contents %
     \newpage
     \tableofcontents
     \newpage
-    
+
     % If more than 1 table/figure show appropriate lists %
     \iftotalfigures
         \addcontentsline{toc}{section}{\listfigurename}
@@ -186,7 +186,7 @@
         \addcontentsline{toc}{section}{\listtablename}
         \listoftables
     \fi
-    
+
     % Display an abstract if the abstract isn't empty %
     \ifdefempty{\essayAbstract}{}{
         \newpage
@@ -194,11 +194,11 @@
         \begin{abstract}
             \essayAbstract
         \end{abstract}
-        
+
     }
     \label{EndFrontMatter}
     \newpage
-    
+
     % Reset page numbering %
     \pagenumbering{arabic}
     \pagestyle{body}
@@ -235,7 +235,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % simple listings, parameter can be changed to change bullet style
 % use itemize for unordered lists
 \begin{enumerate}[a)]
-    \item item 
+    \item item
     \item item
     \item item
 \end{enumerate}
@@ -262,7 +262,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
 % uses tikz for graphing
 \begin{center}
     \begin{tikzpicture}
-    
+
         % defines all of the nodes within the picture
         \begin{scope}
             % node [type] number at location {contents};
@@ -272,7 +272,7 @@ Comes with variables for name and class info (lines 20-29). Auto generates page 
             \node[state] (4) at (9,2) {};
             \node[state] (5) at (12,0) {+};
         \end{scope}
-        
+
         % defines all of the paths within the picture
         \begin{scope}[>={Stealth[black]}, every node/.style={fill=white}]
             %path [arrow] (start node) edge node {contents} (end node);
@@ -323,16 +323,16 @@ $
     \hline
     Version 1 & Version 2\\\hline
     \begin{tikzpicture}
-        \node{S} 
+        \node{S}
             child{
-                node{S} 
-                child{ 
+                node{S}
+                child{
                     node{S}
                     child{
                         node{b}
                     }
                 }
-                child{ 
+                child{
                     node{bbb}
                 }
             }
@@ -342,10 +342,10 @@ $
     \end{tikzpicture}
     &
     \begin{tikzpicture}
-        \node{S} 
+        \node{S}
             child{
-                node{S} 
-                child{ 
+                node{S}
+                child{
                     node{S}
                     child{
                         node{S}
@@ -357,7 +357,7 @@ $
                         node{bb}
                     }
                 }
-                child{ 
+                child{
                     node{bb}
                 }
             }
