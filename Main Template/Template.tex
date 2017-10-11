@@ -86,9 +86,9 @@
 \fancypagestyle{assignment}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[R]{\assignmentType\text{ }\assignmentNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
-    \fancyfoot[L]{\courseCode}
+    \fancyfoot[L]{\courseCode\text{ }\semester}
     \renewcommand{\headrulewidth}{0mm}
 }
 
@@ -96,9 +96,9 @@
 \fancypagestyle{frontmatter}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[R]{\assignmentType\text{ }\assignmentNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{EndFrontMatter}}
-    \fancyfoot[L]{\courseCode}
+    \fancyfoot[L]{\courseCode\text{ }\semester}
     \fancyhead[L]{\name}
     \fancyhead[R]{\studentNumber}
 }
@@ -107,9 +107,9 @@
 \fancypagestyle{body}{
     \fancyhf{}
     \renewcommand{\footrulewidth}{0.1mm}
-    \fancyfoot[R]{\assignmentType \assignmentNumber}
+    \fancyfoot[R]{\assignmentType\text{ }\assignmentNumber}
     \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
-    \fancyfoot[L]{\courseCode}
+    \fancyfoot[L]{\courseCode\text{ }\semester}
     \fancyhead[L]{\name}
     \fancyhead[R]{\studentNumber}
 }
@@ -117,9 +117,9 @@
 % Page header and footers %
 \fancyhf{}
 \renewcommand{\footrulewidth}{0.1mm}
-\fancyfoot[R]{\assignmentType \assignmentNumber}
+\fancyfoot[R]{\assignmentType\text{ }\assignmentNumber}
 \fancyfoot[C]{\thepage \hspace{1pt} of \pageref{LastPage}}
-\fancyfoot[L]{\courseCode}
+\fancyfoot[L]{\courseCode\text{ }\semester}
 \fancyhead[L]{\name}
 \fancyhead[R]{\studentNumber}
 
