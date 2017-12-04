@@ -25,12 +25,12 @@
 \addbibresource{references.bib} % bib source %
 
 % Document details %
-\newcommand{\university}{<University>}
-\newcommand{\name}{<Full Name>}
-\newcommand{\studentNumber}{<Student Number>}
-\newcommand{\semester}{<Semester>}
-\newcommand{\assignmentType}{<Assignment Type>}
-\newcommand{\assignmentNumber}{<Assignment Number>}
+\newcommand{\university}{University of Ottawa}
+\newcommand{\name}{Matthew Langlois}
+\newcommand{\studentNumber}{7731813}
+\newcommand{\semester}{Fall 2017}
+\newcommand{\assignmentType}{Final Project}
+\newcommand{\assignmentNumber}{}
 \newcommand{\dueDate}{<Due Date>}
 \newcommand{\courseCode}{<Course Code>}
 \newcommand{\courseTitle}{<Course Title>}
@@ -138,7 +138,7 @@
     \courseTitle \hfill \university\\
     \courseCode \hfill \semester
     \begin{center}
-        \textbf{\assignmentType\text{ }\#\assignmentNumber}\\
+        \textbf{\assignmentType\text{ }\ifdefempty{\assignmentNumber}{}{\#}\assignmentNumber}\\
         \name \hspace{1pt} - \studentNumber\\
         \dueDate\\
     \end{center}
